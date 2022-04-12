@@ -1,0 +1,43 @@
+{
+  "name": "sand",
+  "version": "0.1.0",
+  "description": "",
+  "main": "./dist/commonjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:main": "tsc -p tsconfig.json",
+    "build:module": "tsc -p tsconfig-esm.json",
+    "docs": "typedoc",
+    "clean": "rimraf dist && rimraf docs",
+    "format": "prettierx --config ./.prettierrc --offset-ternary-expressions --write src/**/*.ts",
+    "lint": "eslint . --fix --ext .ts",
+    "test": "tap --ts --no-coverage **/*.test.ts",
+    "coverage": "tap --ts **/*.test.ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/tap": "^15.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-tsdoc": "^0.2.14",
+    "npm-run-all": "^4.1.5",
+    "prettierx": "^0.8.0",
+    "rimraf": "^3.0.2",
+    "tap": "^16.0.1",
+    "ts-node": "^10.7.0",
+    "typedoc": "^0.22.13",
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "ts-functional-pipe": "^3.1.1"
+  }
+}
