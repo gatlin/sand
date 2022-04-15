@@ -22,6 +22,7 @@ import { atL, over, view } from "./src";
 import { compose } from "ts-functional-pipe";
 import { strict as assert } from "assert";
 
+// some DTO classes
 class ADto {
   public readonly a: BDto;
 }
@@ -34,6 +35,7 @@ class CDto {
   public readonly c: number;
 }
 
+// an `ADto`
 const value = {
   a: {
     b: [{
@@ -44,11 +46,13 @@ const value = {
   }
 };
 
+// a Lens to grab one of the `CDto` values
 const cL = (n: number): Lens_<ADto,CDto> => compose(
-  atL<"a",ADto>("a"),
-  atL<`b.${typeof n}`,BDto>(`b.${n}`)
+  atL("a"),
+  atL(`b.${n}`)
 );
 
+// a modified copy of `value`, which was not touched.
 const updatedValue: ADto =
   over(
     compose(cL(0), atL("c"))
@@ -74,6 +78,8 @@ function absL(): Lens_<number,number> {
   });
 }
 
+// we can square the absolute value "inside" a negative number, and get a
+// negative result
 assert.deepEqual(
   over(
     compose(
