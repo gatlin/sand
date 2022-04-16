@@ -31,7 +31,6 @@ interface Optic<F extends HKT,S,T,A,B> {
 }
 
 type Lens<S,T,A,B> = Optic<ConstHKT | IdHKT,S,T,A,B>;
-type Lens_<S,A> = Lens<S,S,A,A>;
 
 function atL<
   K extends string|number,
@@ -49,5 +48,8 @@ function atL<
     ));
 }
 
-export type { Optic, Lens, Lens_, Getter, Setter };
+type Setter_<S,A> = Setter<S,S,A,A> ;
+type Lens_<S,A> = Lens<S,S,A,A>;
+
+export type { Optic, Lens, Lens_, Getter, Setter, Setter_ };
 export { atL, over, view };

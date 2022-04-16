@@ -1,4 +1,4 @@
-import type { Lens_ } from "./src";
+import type { Lens_, Setter_ } from "./src";
 import { atL, over, view } from "./src";
 import { compose } from "ts-functional-pipe";
 import { strict as assert } from "assert";
@@ -26,13 +26,13 @@ const value = {
 };
 
 const cL = (n: number): Lens_<ADto,CDto> => compose(
-  atL<"a",ADto>("a"),
-  atL<`b.${typeof n}`,BDto>(`b.${n}`)
+  atL("a"),
+  atL(`b.${n}`)
 );
 
 const updatedValue: ADto =
   over(
-    compose(cL(0), atL("c"))
+    compose(cL(0), atL("c")) as Setter_<ADto,number>
   )(
     (v: number) => v * v
   )(
@@ -47,7 +47,7 @@ assert.equal(sixteen, 16);
 
 // Lens which focuses on the absolute value "inside of" a number
 function absL(): Lens_<number,number> {
-  return (f) => (n) => f(n).map((u) => {
+  return (f) => (n) => f(Math.abs(n)).map((u) => {
     if (u < 0) {
       throw new Error(`absolute values cannot be negative`);
     }
@@ -60,7 +60,7 @@ assert.deepEqual(
     compose(
       atL("someFinancialStat"),
       absL()
-    )
+    ) as Setter_<Record<string|number,any>,number>
   )(
     (n: number) => n * n
   )({
@@ -76,7 +76,7 @@ const negative_289: number =
         cL(1),
         atL("c"),
         absL()
-      )
+      ) as Setter_<ADto,number>
     )
     ((n: number) => n * n)
     (value)

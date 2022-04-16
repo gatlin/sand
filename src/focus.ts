@@ -18,12 +18,6 @@ class Id<A> extends Focus<A,A> implements Functor<IdHKT> {
   map<B>(f: (a: A) => B): Id<B> {
     return new Id(f(this.value));
   }
-
-  /*
-  other(): A[] {
-    return [this.value, this.value];
-  }
-  */
 }
 
 interface ConstHKT extends HKT {
