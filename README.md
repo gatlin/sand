@@ -70,7 +70,7 @@ assert.equal(sixteen, 16);
 
 // Lens which focuses on the absolute value "inside of" a number
 function absL(): Lens_<number,number> {
-  return (f) => (n) => f(n).map((u) => {
+  return (f) => (n) => f(Math.abs(n)).map((u) => {
     if (u < 0) {
       throw new Error(`absolute values cannot be negative`);
     }
