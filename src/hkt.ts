@@ -23,9 +23,10 @@ interface Functor<T extends HKT> {
 }
 
 interface Apply<T extends HKT> extends Functor<T> {
-  ap<B>(
-    fn: $<T, (a: T[typeof Variable]) => B>
-  ): $<T, B>;
+  ap<A,B>(
+    this: $<T, (a: A) => B>,
+    arg: $<T,A>
+  ): $<T,B> ;
 }
 
 export type {
