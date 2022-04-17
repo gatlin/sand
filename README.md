@@ -5,7 +5,7 @@ an unfinished library for optics in typescript.
 
 - [X] basic lenses that compose like functions
 - [ ] better lenses that overcome the subtle type issues I need to document
-- [~] traversals
+- [X] traversals (partial)
 - [ ] prisms
 - [ ] isos
 
