@@ -13,7 +13,7 @@ type $<T extends HKT, A> = T extends { [Type]: unknown }
   })[typeof Type]
   : {
     [Indirect]: T; // forces tsc to retain reference to T
-    [Variable]: () => A;
+    [Variable]: A;
   };
 
 interface Functor<T extends HKT> {

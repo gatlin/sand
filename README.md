@@ -17,10 +17,12 @@ synopsis
 cf [demo.ts](demo.ts)
 
 ```typescript
-import type { Lens_, Setter_ } from "./src";
-import { atL, over, view } from "./src";
+import type { Lens_, Setter_, Traversal_ } from "./src";
+import { atL, over, view, Id, arrayWhereT } from "./src";
 import { compose } from "ts-functional-pipe";
 import { strict as assert } from "assert";
+
+// there's a traversal example after the lens ones!
 
 // Lens case #1: type-safe *first-class* property accessor.
 class ADto {
@@ -89,7 +91,7 @@ function absL(): Lens_<number,number> {
 }
 
 const negative_289: number =
-  view(compose(cL(1),atL("c")))(
+  view(atL("a.b.1.c"))(
     over(
       compose(
         cL(1),
@@ -103,6 +105,19 @@ const negative_289: number =
 // nifty, right?
 assert.equal(negative_289, -289);
 
+// Traversals! (calloo! callay!)
+// A traversal is a lens which can focus on multiple values.
+// They can be used with `over` to updated a structure the same as with lenses,
+// but they require a different function to read values out.
+// *Stay tuned!*
+assert.deepEqual(
+  over(arrayWhereT(0))(
+    (_) => -1
+  )(
+    [ 0, 2,  0, 5,  0]
+  ),
+  [-1, 2, -1, 5, -1]
+);
 ```
 
 questions / comments / scathing criticism

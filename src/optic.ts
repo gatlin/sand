@@ -48,8 +48,45 @@ function atL<
     ));
 }
 
+type Traversal<S,T,A,B> = Optic<IdHKT, S, T, A, B>;
+
+function _eq<A>(
+  l: A,
+  r: A
+): boolean {
+  if ("object" === typeof l) {
+    return Object.is(l, r);
+  }
+  else {
+    return l === r;
+  }
+}
+
+function arrayWhereT<A>(
+  refValue: A
+): Traversal<Array<A>,Array<A>,A,A> {
+  return (fn) => (arr) =>
+    arr.reduceRight(
+      (acc: Id<Array<A>>, cur: A) =>
+        acc.map(
+          (arr_) => (x: A) => ([ x, ...arr_ ])
+        ).ap(_eq(cur,refValue) ? fn(cur) : new Id(cur)),
+      new Id([])
+    );
+}
+
 type Setter_<S,A> = Setter<S,S,A,A> ;
 type Lens_<S,A> = Lens<S,S,A,A>;
+type Traversal_<S,A> = Traversal<S,S,A,A>;
 
-export type { Optic, Lens, Lens_, Getter, Setter, Setter_ };
-export { atL, over, view };
+export type {
+  Optic,
+  Lens,
+  Lens_,
+  Getter,
+  Setter,
+  Setter_,
+  Traversal,
+  Traversal_
+};
+export { atL, over, view, arrayWhereT };
