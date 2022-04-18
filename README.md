@@ -126,10 +126,11 @@ assert.deepEqual(
   over(
     compose(
       atL("a.b"),
-      arrayWhereT({ c: 3 })
-    ) as Setter_<ADto,CDto>
+      arrayWhereT({ c: 3 }),
+      atL("c") as Setter_<CDto,number> // TODO should be optional
+    ) as Setter_<ADto,number>          // ""
   )(
-    (cdto: CDto) => ({ c: cdto.c * 2})
+    (n: number) => n * 2
   )
   (
     value
