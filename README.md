@@ -43,6 +43,8 @@ const value: ADto = {
       c: 4
     }, {
       c: -17
+    },{
+      c: 3
     }]
   }
 };
@@ -117,6 +119,36 @@ assert.deepEqual(
     [ 0, 2,  0, 5,  0]
   ),
   [-1, 2, -1, 5, -1]
+);
+
+// Almost forgot - traversals can compose with lenses :)
+assert.deepEqual(
+  over(
+    compose(
+      atL("a.b"),
+      arrayWhereT({ c: 3 })
+    ) as Setter_<ADto,CDto>
+  )(
+    (cdto: CDto) => ({ c: cdto.c * 2})
+  )
+  (
+    value
+  ),
+  {
+    "a": {
+      "b": [
+        {
+          "c": 4
+        },
+        {
+          "c": -17
+        },
+        {
+          "c": 6
+        }
+      ]
+    }
+  }
 );
 ```
 

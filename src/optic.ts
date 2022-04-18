@@ -50,12 +50,9 @@ function atL<
 
 type Traversal<S,T,A,B> = Optic<IdHKT, S, T, A, B>;
 
-function _eq<A>(
-  l: A,
-  r: A
-): boolean {
-  if ("object" === typeof l) {
-    return Object.is(l, r);
+function _eq<A>(l: A, r: A): boolean {
+  if ("object" === typeof l && "object" === typeof r) {
+    return JSON.stringify(l) === JSON.stringify(r);
   }
   else {
     return l === r;
