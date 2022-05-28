@@ -17,24 +17,11 @@ type $<T extends HKT, A> = T extends { [Type]: unknown }
   };
 
 interface Functor<T extends HKT> {
-  map<B>(
-    f: (a: T[typeof Variable]) => B
-  ): $<T,B> ;
+  map<B>(f: (a: T[typeof Variable]) => B): $<T, B>;
 }
 
 interface Apply<T extends HKT> extends Functor<T> {
-  ap<A,B>(
-    this: $<T, (a: A) => B>,
-    arg: $<T,A>
-  ): $<T,B> ;
+  ap<A, B>(this: $<T, (a: A) => B>, arg: $<T, A>): $<T, B>;
 }
 
-export type {
-  Type,
-  Variable,
-  HKT,
-  $,
-  Apply,
-  Functor
-};
-
+export type { Type, Variable, HKT, $, Apply, Functor };
